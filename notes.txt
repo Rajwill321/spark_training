@@ -1,0 +1,464 @@
+https://cloud.cdp.rpsconsulting.in/console/#/
+AP##
+rps@12345-------password
+
+
+
+spark-shell
+
+
+pyspark
+
+sc.appName
+
+scala> val rdd1=sc.textFile("c:/test/testin.txt")
+
+scala> rdd1.collect()
+
+scala> val rdd1=sc.textFile("c:/test")
+
+
+scala> rdd1.collect()
+
+
+>>> rdd1=sc.textFile("c:/test")
+>>> rdd1.collect()
+
+
+ <dependencies>
+  <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-core -->
+<dependency>
+    <groupId>org.apache.spark</groupId>
+    <artifactId>spark-core_2.12</artifactId>
+    <version>3.1.1</version>
+</dependency>
+  
+  </dependencies>
+  
+  package com.jpmc.training.sparkcore;
+
+import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.api.java.JavaSparkContext;
+
+public class RDDCreationTest1 {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        
+        SparkConf conf=new SparkConf();
+        conf.setMaster("local[*]");
+        conf.setAppName("rdd-creation-test");
+        
+        JavaSparkContext sc=new JavaSparkContext(conf);
+        sc.setLogLevel("WARN");
+        JavaRDD<String> rdd1=sc.textFile("c:/test");
+        rdd1.collect().forEach(System.out::println);
+
+    }
+
+}
+
+scala> val list=List(4,23,55,10,20)
+list: List[Int] = List(4, 23, 55, 10, 20)
+
+scala> val rdd1=sc.parallelize(list)
+rdd1: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[4] at parallelize at <console>:26
+
+scala> rdd1.collect()
+
+
+package com.jpmc.training.sparkcore;
+
+import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.api.java.JavaSparkContext;
+
+public class RDDCreationTest1 {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        
+        SparkConf conf=new SparkConf();
+        conf.setMaster("local[*]");
+        conf.setAppName("rdd-creation-test");
+        
+        JavaSparkContext sc=new JavaSparkContext(conf);
+        sc.setLogLevel("WARN");
+        JavaRDD<String> rdd1=sc.textFile("c:/test");
+        rdd1.collect().forEach(System.out::println);
+        
+        try {
+            Thread.sleep(5*60*1000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }
+
+}
+
+
+case class Employee(id:Int,name:String,designation:String){
+      def printDetails()=println("Id:"+id+"\tName:"+name+"\tDesignation:"+designation)
+      }
+      
+      
+      scala> case class Employee(id:Int,name:String,designation:String){
+     | def printDetails()=println("Id:"+id+"\tName:"+name+"\tDesignation:"+designation)
+     | }
+defined class Employee
+
+scala> val list=List(Employee(1001,"Rajiv","Developer"),Employee(1002,"Surya","Accountant"))
+list: List[Employee] = List(Employee(1001,Rajiv,Developer), Employee(1002,Surya,Accountant))
+
+scala> val empRdd=sc.parallelize(list)
+empRdd: org.apache.spark.rdd.RDD[Employee] = ParallelCollectionRDD[5] at parallelize at <console>:26
+
+scala> empRdd.collect()
+res4: Array[Employee] = Array(Employee(1001,Rajiv,Developer), Employee(1002,Surya,Accountant))
+
+
+scala> empRdd.collect().foreach(e=>e.printDetails())
+
+scala> empRdd.count()
+res7: Long = 2
+
+scala> empRdd.take(1)
+res8: Array[Employee] = Array(Employee(1001,Rajiv,Developer))
+
+scala> rdd1.collect()
+res9: Array[Int] = Array(4, 23, 55, 10, 20)
+
+scala> rdd1.take(3)
+res10: Array[Int] = Array(4, 23, 55)
+
+scala> rdd1.saveAsTextFile("c:/testout-1")
+
+scala> rdd1.getNumPartitions
+
+
+scala> rdd1.collect()
+res13: Array[Int] = Array(4, 23, 55, 10, 20)
+
+scala> val rdd2=rdd1.map(n=>n*n)
+rdd2: org.apache.spark.rdd.RDD[Int] = MapPartitionsRDD[7] at map at <console>:25
+
+scala> rdd2.collect()
+res14: Array[Int] = Array(16, 529, 3025, 100, 400)
+
+scala> val rdd3=rdd1.map(n=>Math.sqrt(n))
+rdd3: org.apache.spark.rdd.RDD[Double] = MapPartitionsRDD[8] at map at <console>:25
+
+scala> rdd3.collect()
+res15: Array[Double] = Array(2.0, 4.795831523312719, 7.416198487095663, 3.1622776601683795, 4.47213595499958)
+
+scala> rdd1.collect()
+
+
+package com.jpmc.training.sparkcore;
+
+import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.api.java.JavaSparkContext;
+
+public class MapTest {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        
+        SparkConf conf=new SparkConf();
+        conf.setMaster("local[*]");
+        conf.setAppName("rdd-map-test");
+        
+        JavaSparkContext sc=new JavaSparkContext(conf);
+        sc.setLogLevel("WARN");
+        JavaRDD<String> rdd1=sc.textFile("c:/test");
+        JavaRDD<String> rdd2=rdd1.map(s->s.toUpperCase());
+        rdd2.collect().forEach(System.out::println);
+    
+
+    }
+
+}
+
+
+>>> rdd2=rdd1.map(lambda x:x.upper())
+>>> rdd2.collect()
+
+scala> val rdd1=sc.parallelize(List(4,6,10,11,24,17))
+rdd1: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[10] at parallelize at <console>:24
+
+scala> val oddRdd=rdd1.filter(n=>n%2!=0)
+oddRdd: org.apache.spark.rdd.RDD[Int] = MapPartitionsRDD[11] at filter at <console>:25
+
+scala> val evenRdd=rdd1.filter(n=>n%2==0)
+evenRdd: org.apache.spark.rdd.RDD[Int] = MapPartitionsRDD[12] at filter at <console>:25
+
+scala> oddRdd.collect()
+res18: Array[Int] = Array(11, 17)
+
+scala> evenRdd.collect()
+
+
+scala> rdd1.filter(n=>n%2!=0).map(x=>x*x).collect()
+
+
+
+
+
+c:\test\third.txt
+
+the cat sat on the mat
+she sells the sea shells on the sea shore
+scala is fun
+kafka is a message oriented middleware
+
+
+Filter out all the lines which start with 's' , convert them to upper case format  and print the result.
+
+Java Code Map and Filter : 
+
+public class MapFilterTest2 {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+         SparkConf conf=new SparkConf();
+            conf.setMaster("local[*]");
+            conf.setAppName("rdd-map-test");
+            
+            JavaSparkContext sc=new JavaSparkContext(conf);
+            sc.setLogLevel("WARN");
+            JavaRDD<String> rdd1=sc.textFile("c:/test/third.txt");          
+            JavaRDD<String> rdd2=rdd1.filter(s->s.startsWith("s")).map(n->n.toUpperCase());
+            rdd2.collect().forEach(System.out::println);
+        
+    }
+
+}
+
+Scala code for Spark-Shell
+val transformedRdd = sc.textFile("C:/test/third.txt").filter(x=>x.startsWith("s")).map(a=>a.toUpperCase())
+transformedRdd.collect()
+
+
+scala> val rdd1=sc.textFile("c:/test/testin.txt")
+rdd1: org.apache.spark.rdd.RDD[String] = c:/test/testin.txt MapPartitionsRDD[16] at textFile at <console>:24
+
+scala> rdd1.collect()
+res21: Array[String] = Array(the cat sat on the mat, the aardvark sat on the sofa)
+
+scala> val rdd2=rdd1.map(line=>line.split(" "))
+rdd2: org.apache.spark.rdd.RDD[Array[String]] = MapPartitionsRDD[17] at map at <console>:25
+
+scala> rdd2.collect()
+res22: Array[Array[String]] = Array(Array(the, cat, sat, on, the, mat), Array(the, aardvark, sat, on, the, sofa))
+
+scala> val rdd2=rdd1.flatMap(line=>line.split(" "))
+rdd2: org.apache.spark.rdd.RDD[String] = MapPartitionsRDD[18] at flatMap at <console>:25
+
+scala> rdd2.collect()
+
+
+scala> val rdd1=sc.parallelize(List(6,3,10))
+rdd1: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[19] at parallelize at <console>:24
+
+scala> val rdd2=rdd1.map(n=>List(n-1,n,n+1))
+rdd2: org.apache.spark.rdd.RDD[List[Int]] = MapPartitionsRDD[20] at map at <console>:25
+
+scala> rdd2.collect()
+res24: Array[List[Int]] = Array(List(5, 6, 7), List(2, 3, 4), List(9, 10, 11))
+
+scala> val rdd2=rdd1.flatMap(n=>List(n-1,n,n+1))
+rdd2: org.apache.spark.rdd.RDD[Int] = MapPartitionsRDD[21] at flatMap at <console>:25
+
+scala> rdd2.collect()
+
+
+package com.jpmc.training.sparkcore;
+
+import java.util.Arrays;
+
+import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.api.java.JavaSparkContext;
+
+public class FlatMapTest {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        
+        SparkConf conf=new SparkConf();
+        conf.setMaster("local[*]");
+        conf.setAppName("rdd-map-test");
+        
+        JavaSparkContext sc=new JavaSparkContext(conf);
+        sc.setLogLevel("WARN");
+        JavaRDD<String> rdd1=sc.textFile("c:/test");
+        JavaRDD<String> rdd2=rdd1.flatMap(line->Arrays.asList(line.split(" ")).iterator());
+        rdd2.collect().forEach(System.out::println);
+    
+
+    }
+
+}
+
+
+scala> val rdd1=sc.textFile("c:/tessssssssst")
+rdd1: org.apache.spark.rdd.RDD[String] = c:/tessssssssst MapPartitionsRDD[23] at textFile at <console>:24
+
+scala> val rdd2=rdd1.filter(line=>line.startsWith("s"))
+rdd2: org.apache.spark.rdd.RDD[String] = MapPartitionsRDD[24] at filter at <console>:25
+
+scala> val rdd3=rdd2.map(line=>line.toUpperCase())
+rdd3: org.apache.spark.rdd.RDD[String] = MapPartitionsRDD[25] at map at <console>:25
+
+scala> rdd3.collect()
+
+
+scala> val rdd1=sc.textFile("c:/test")
+rdd1: org.apache.spark.rdd.RDD[String] = c:/test MapPartitionsRDD[27] at textFile at <console>:24
+
+scala> val rdd2=rdd1.filter(line=>line.startsWith("s"))
+rdd2: org.apache.spark.rdd.RDD[String] = MapPartitionsRDD[28] at filter at <console>:25
+
+scala> val rdd3=rdd2.map(line=>line.toUpperCase())
+rdd3: org.apache.spark.rdd.RDD[String] = MapPartitionsRDD[29] at map at <console>:25
+
+scala> rdd3.collect()
+
+
+
+scala> val t=("a","b","c")
+t: (String, String, String) = (a,b,c)
+
+scala> t._1
+res28: String = a
+
+scala> t._2
+res29: String = b
+
+scala> t._3
+res30: String = c
+
+scala> def test()=(1,10,"hello")
+test: ()(Int, Int, String)
+
+scala> test()._1
+res31: Int = 1
+
+scala> test()._2
+res32: Int = 10
+
+scala> test()._3
+
+scala> val rdd1=sc.parallelize(List(("a",3),("b",5),("a",10),("b",12),("c",4),("d",10),("d",2)))
+rdd1: org.apache.spark.rdd.RDD[(String, Int)] = ParallelCollectionRDD[30] at parallelize at <console>:24
+
+
+
+scala> val rdd2=rdd1.groupByKey()
+rdd2: org.apache.spark.rdd.RDD[(String, Iterable[Int])] = ShuffledRDD[31] at groupByKey at <console>:25
+
+scala> rdd2.collect()
+
+scala> rdd1.reduceByKey((x,y)=>x+y).collect()
+
+
+
+scala> val linesRdd=sc.textFile("c:/test/testin.txt")
+linesRdd: org.apache.spark.rdd.RDD[String] = c:/test/testin.txt MapPartitionsRDD[34] at textFile at <console>:24
+
+
+
+scala> val wordsRdd=linesRdd.flatMap(line=>line.split(" "))
+wordsRdd: org.apache.spark.rdd.RDD[String] = MapPartitionsRDD[35] at flatMap at <console>:25
+
+scala> val wordOccurrenceRdd=wordsRdd.map(word=>(word,1))
+wordOccurrenceRdd: org.apache.spark.rdd.RDD[(String, Int)] = MapPartitionsRDD[36] at map at <console>:25
+
+scala> val wordCountRdd=wordOccurrenceRdd.reduceByKey((x,y)=>x+y)
+wordCountRdd: org.apache.spark.rdd.RDD[(String, Int)] = ShuffledRDD[37] at reduceByKey at <console>:25
+
+scala> wordCountRdd.collect()
+
+
+package com.jpmc.training.sparkcore;
+
+import java.util.Arrays;
+
+import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaPairRDD;
+import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.api.java.JavaSparkContext;
+
+import scala.Tuple2;
+
+public class WordCountTest {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        
+        SparkConf conf=new SparkConf();
+        conf.setMaster("local[*]");
+        conf.setAppName("word-count-test");
+        
+        JavaSparkContext sc=new JavaSparkContext(conf);
+        sc.setLogLevel("WARN");
+        JavaRDD<String> rdd1=sc.textFile("c:/test/testin.txt");
+        JavaRDD<String> rdd2=rdd1.flatMap(line->Arrays.asList(line.split(" ")).iterator());
+        JavaPairRDD<String, Integer> rdd3=rdd2.mapToPair(word->new Tuple2<>(word,1));
+        JavaPairRDD<String, Integer> wordCountRdd=rdd3.reduceByKey((x,y)->x+y);
+        wordCountRdd.collect().forEach(System.out::println);
+    
+
+    }
+
+}
+
+
+package com.jpmc.training.sparkcore;
+
+import java.util.Arrays;
+
+import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaPairRDD;
+import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.api.java.JavaSparkContext;
+
+import scala.Tuple2;
+
+public class WordCountTest_Version2 {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        
+        SparkConf conf=new SparkConf();
+        conf.setMaster("local[*]");
+        conf.setAppName("word-count-test");
+        
+        JavaSparkContext sc=new JavaSparkContext(conf);
+        sc.setLogLevel("WARN");
+        JavaRDD<String> rdd1=sc.textFile("c:/test/testin.txt");
+        rdd1.flatMap(line->Arrays.asList(line.split(" ")).iterator())
+        .mapToPair(word->new Tuple2<>(word,1))
+        .reduceByKey((x,y)->x+y)
+        .collect().forEach(System.out::println);
+    }
+
+    }
+
+
+
+scala> wordCountRdd.map(t=>(t._2,t._1)).collect()
+res39: Array[(Int, String)] = Array((1,aardvark), (1,mat), (2,sat), (1,cat), (2,on), (1,sofa), (4,the))
+
+scala> wordCountRdd.map(t=>(t._2,t._1)).sortByKey(false).collect()
+res40: Array[(Int, String)] = Array((4,the), (2,sat), (2,on), (1,aardvark), (1,mat), (1,cat), (1,sofa))
+
+scala> wordCountRdd.map(t=>(t._2,t._1)).sortByKey(false).map(t=>(t._2,t._1)).collect()
+
+scala> wordCountRdd.sortBy(t=>t._2,false).collect()
+
+

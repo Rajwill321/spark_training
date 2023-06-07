@@ -472,3 +472,36 @@ C:\Users\Administrator\Downloads\spark-3.1.3-bin-hadoop3.2\python\lib\pyspark.zi
 >>>
 
 ============================================
+
+c:\test\users.json
+
+{"name":"Alice", "pcode":"94304"}
+{"name":"Brayden", "age":30, "pcode":"94304"}
+{"name":"Carla", "age":19, "pcode":"10036"}
+{"name":"Diana", "age":46}
+{"name":"Étienne", "pcode":"94104"}
+
+scala> val userDF=spark.read.json("c:/test/users.json")
+userDF: org.apache.spark.sql.DataFrame = [age: bigint, name: string ... 1 more field]
+
+scala> userDF.show()
+
+scala> userDF.printSchema()
+=======================================
+
+scala> val usersDF = spark.read.json("c:/test/user.json")
+usersDF: org.apache.spark.sql.DataFrame = [age: bigint, name: string ... 1 more field]
+
+scala> usersDF.show()
++----+-------+-----+
+| age|   name|pcode|
++----+-------+-----+
+|null|  Alice|94304|
+|  30|Brayden|94304|
+|  19|  Carla|10036|
+|  46|  Diana| null|
+|null|Étienne|94104|
++----+-------+-----+
+
+
+scala>

@@ -1,0 +1,59 @@
+C:\Users\Administrator>parquet-tools show C:\testparquet1\part-00000-39dc3901-7378-447a-b111-c00a2c54c332-c000.snappy.parquet
++-------+---------+---------+
+|   age | name    |   pcode |
+|-------+---------+---------|
+|   nan | Alice   |   94304 |
+|    30 | Brayden |   94304 |
+|    19 | Carla   |   10036 |
+|    46 | Diana   |         |
+|   nan | Étienne |   94104 |
++-------+---------+---------+
+
+C:\Users\Administrator>parquet-tools inspect C:\testparquet1\part-00000-39dc3901-7378-447a-b111-c00a2c54c332-c000.snappy.parquet
+
+############ file meta data ############
+created_by: parquet-mr version 1.10.1 (build a89df8f9932b6ef6633d06069e50c9b7970bebd1)
+num_columns: 3
+num_rows: 5
+num_row_groups: 1
+format_version: 1.0
+serialized_size: 667
+
+
+############ Columns ############
+age
+name
+pcode
+
+############ Column(age) ############
+name: age
+path: age
+max_definition_level: 1
+max_repetition_level: 0
+physical_type: INT64
+logical_type: None
+converted_type (legacy): NONE
+compression: SNAPPY (space_saved: 1%)
+
+############ Column(name) ############
+name: name
+path: name
+max_definition_level: 1
+max_repetition_level: 0
+physical_type: BYTE_ARRAY
+logical_type: String
+converted_type (legacy): UTF8
+compression: SNAPPY (space_saved: 0%)
+
+############ Column(pcode) ############
+name: pcode
+path: pcode
+max_definition_level: 1
+max_repetition_level: 0
+physical_type: BYTE_ARRAY
+logical_type: String
+converted_type (legacy): UTF8
+compression: SNAPPY (space_saved: -4%)
+
+
+C:\Users\Administrator>
